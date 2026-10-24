@@ -1,0 +1,103 @@
+/*
+ * Compact Hover Urlbar Icons — a Sine mod for Zen Browser
+ *
+ * In compact mode, hides the address bar's icons (copy link, site settings,
+ * zoom level, and the other page-action / identity / pinned-extension buttons)
+ * and only shows them while the address bar itself is hovered.
+ *
+ * Why this is needed: in the single-toolbar layout Zen already hides these
+ * icons until #navigator-toolbox gets [zen-has-implicit-hover]. In compact
+ * mode, sliding the sidebar out *is* that hover, so they're always visible.
+ * This narrows the trigger to hovering #urlbar.
+ *
+ * Sine loads mods as a USER_SHEET, so !important is required to override
+ * Zen's own author-level rules.
+ */
+
+/* ---------- Hide ---------- */
+:root[zen-compact-mode="true"]:not([customizing]) #urlbar:not([breakout-extend]) :is(
+  #zen-copy-url-button,
+  #zen-site-data-icon-button,
+  #urlbar-zoom-button,
+  .urlbar-page-action,
+  .identity-box-button,
+  .unified-extensions-item
+) {
+  opacity: 0 !important;
+  visibility: collapse !important;
+}
+
+/* Fade out, then collapse once the fade finishes (same timing Zen uses). */
+@media (prefers-reduced-motion: no-preference) {
+  :root[zen-compact-mode="true"]:not([customizing]):not([supress-primary-adjustment="true"]) #urlbar:not([breakout-extend]) :is(
+    #zen-copy-url-button,
+    #zen-site-data-icon-button,
+    #urlbar-zoom-button,
+    .urlbar-page-action,
+    .identity-box-button,
+    .unified-extensions-item
+  ) {
+    transition:
+      opacity 0.15s,
+      visibility 0s linear 0.15s !important;
+  }
+}
+
+/* ---------- Show ---------- */
+:root[zen-compact-mode="true"]:not([customizing]) #urlbar:not([breakout-extend]):is(:hover, :focus-within, [has-popup-open="true"]) :is(
+  #zen-copy-url-button,
+  #zen-site-data-icon-button,
+  #urlbar-zoom-button,
+  .urlbar-page-action,
+  .identity-box-button,
+  .unified-extensions-item
+),
+/* Keep a button visible while the panel it opened is showing. */
+:root[zen-compact-mode="true"]:not([customizing]) #urlbar:not([breakout-extend]) :is(
+  #zen-copy-url-button,
+  #zen-site-data-icon-button,
+  #urlbar-zoom-button,
+  .urlbar-page-action,
+  .identity-box-button,
+  .unified-extensions-item
+):is([open], [showing]),
+/* Match Zen: on an empty new tab the icons stay visible. */
+:root[zen-compact-mode="true"][zen-has-empty-tab="true"]:not([customizing]) #urlbar:not([breakout-extend]) :is(
+  #zen-copy-url-button,
+  #zen-site-data-icon-button,
+  #urlbar-zoom-button,
+  .urlbar-page-action,
+  .identity-box-button,
+  .unified-extensions-item
+) {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Fade in immediately (no visibility delay). */
+@media (prefers-reduced-motion: no-preference) {
+  :root[zen-compact-mode="true"]:not([customizing]) #urlbar:not([breakout-extend]):is(:hover, :focus-within, [has-popup-open="true"]) :is(
+    #zen-copy-url-button,
+    #zen-site-data-icon-button,
+    #urlbar-zoom-button,
+    .urlbar-page-action,
+    .identity-box-button,
+    .unified-extensions-item
+  ),
+  :root[zen-compact-mode="true"]:not([customizing]) #urlbar:not([breakout-extend]) :is(
+    #zen-copy-url-button,
+    #zen-site-data-icon-button,
+    #urlbar-zoom-button,
+    .urlbar-page-action,
+    .identity-box-button,
+    .unified-extensions-item
+  ):is([open], [showing]) {
+    transition: opacity 0.15s !important;
+  }
+}
+
+/* Keep Zen's dimmed look for a disabled copy-link button when revealed
+   (in the single-toolbar layout Zen hides it entirely with display:none). */
+:root[zen-compact-mode="true"]:not([customizing]) #urlbar:not([breakout-extend]):is(:hover, :focus-within, [has-popup-open="true"]) #zen-copy-url-button[disabled] {
+  opacity: 0.3 !important;
+}

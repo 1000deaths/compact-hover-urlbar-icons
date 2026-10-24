@@ -1,0 +1,23 @@
+{
+  "id": "compact-hover-urlbar-icons",
+  "name": "Compact Hover Urlbar Icons",
+  "description": "In compact mode, hides the address bar icons (copy link, site settings, zoom, page actions) until you hover the address bar.",
+  "author": "1000deaths",
+  "homepage": "https://github.com/1000deaths/compact-hover-urlbar-icons",
+  "readme": "https://raw.githubusercontent.com/1000deaths/compact-hover-urlbar-icons/main/README.md",
+  "version": "1.0.0",
+  "style": {
+    "chrome": "chrome.css"
+  },
+  "tags": [
+    "compact mode",
+    "urlbar",
+    "minimal"
+  ],
+  "fork": [
+    "zen"
+  ],
+  "ai": "yes",
+  "createdAt": "2026-10-24",
+  "updatedAt": "2026-10-24"
+}
